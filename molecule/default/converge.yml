@@ -4,26 +4,28 @@
   #become: true
 
   pre_tasks:
-    - name: Set Java 8 package for RedHat.
+    - name: Set Java 21 package for RedHat.
       set_fact:
         java_packages:
-          - java-1.8.0-openjdk
+          - java-21-openjdk
       when: ansible_facts.os_family == "RedHat"
 
-    - name: Set Java 8 package for Ubuntu.
+    - name: Set Java 17 package for Ubuntu.
       set_fact:
         java_packages:
-          - openjdk-8-jdk
+          - openjdk-17-jdk
       when: ansible_facts.os_family == "Ubuntu"
 
-    - name: Set Java 11 package for Debian.
+    - name: Set Java 17 package for Debian.
       set_fact:
         java_packages:
-          - openjdk-11-jdk
+          - openjdk-17-jdk
       when: ansible_facts.os_family == "Debian"
 
     - name: Update apt cache.
-      apt: update_cache=true cache_valid_time=600
+      apt:
+        update_cache: true
+        cache_valid_time: 600
       when: ansible_facts.os_family == "Debian"
 
     # See: http://unix.stackexchange.com/a/342469
